@@ -10,4 +10,12 @@ export class ShoppersService {
   async getActiveShopperIds(): Promise<string[]> {
     return this.redis.smembers(REDIS_KEYS.ACTIVE_SHOPPERS);
   }
+
+  async addActiveShopper(shopperId: string): Promise<void> {
+    await this.redis.sadd(REDIS_KEYS.ACTIVE_SHOPPERS, shopperId);
+  }
+
+  async removeActiveShopper(shopperId: string): Promise<void> {
+    await this.redis.srem(REDIS_KEYS.ACTIVE_SHOPPERS, shopperId);
+  }
 }
